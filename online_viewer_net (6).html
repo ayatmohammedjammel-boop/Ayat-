@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Jordan Gov Ultimate System</title>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+margin:0;
+background:#0b1220;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+font-family:Arial;
+color:white;
+}
+
+/* APP FRAME */
+.app{
+width:390px;
+height:750px;
+background:#111827;
+border-radius:30px;
+overflow:hidden;
+position:relative;
+box-shadow:0 0 50px rgba(0,0,0,0.8);
+}
+
+/* SPLASH */
+#splash{
+position:absolute;
+width:100%;
+height:100%;
+background:#0b1220;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:999;
+animation:fade 2.5s forwards;
+}
+
+@keyframes fade{
+0%{opacity:1;}
+80%{opacity:1;}
+100%{opacity:0;visibility:hidden;}
+}
+
+/* HEADER */
+.top{
+background:#0f172a;
+padding:10px;
+text-align:center;
+font-weight:bold;
+}
+
+/* SCREEN */
+.screen{
+padding:15px;
+}
+
+/* INPUT */
+input{
+width:100%;
+padding:10px;
+margin:6px 0;
+border:none;
+border-radius:8px;
+}
+
+/* BUTTON */
+button{
+width:100%;
+padding:12px;
+background:#C9A227;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* CARD */
+.card{
+background:#1f2937;
+padding:15px;
+border-radius:15px;
+margin-top:10px;
+}
+
+/* QR */
+#qrcode{
+margin:10px auto;
+}
+
+/* FINGER */
+.finger{
+width:60px;
+height:60px;
+border-radius:50%;
+border:2px solid #60a5fa;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:auto;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
+}
+
+/* ISTD BADGE */
+.badge{
+display:flex;
+align-items:center;
+gap:10px;
+justify-content:center;
+margin-bottom:10px;
+font-size:12px;
+color:#cbd5e1;
+}
+
+.badge img{
+width:35px;
+border-radius:6px;
+}
+
+.hidden{display:none;}
+
+.small{font-size:11px;color:#9ca3af;}
+
+/* SIGNATURE BOX */
+.signBox{
+margin-top:10px;
+padding:12px;
+border:1px dashed #C9A227;
+border-radius:10px;
+text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SPLASH -->
+<div id="splash">
+<h2>🏛️ Jordan Government System</h2>
+<p>Secure Digital Platform Loading...</p>
+</div>
+
+<div class="top">📱 Gov Ultimate App</div>
+
+<div class="screen">
+
+<!-- LOGIN -->
+<div id="login">
+
+<h3>Login</h3>
+
+<input placeholder="اسم المستخدم">
+<input placeholder="رقم وطني / إقامة">
+
+<div class="finger">🔒</div>
+
+<button onclick="otp()">دخول</button>
+
+</div>
+
+<!-- OTP -->
+<div id="otp" class="hidden">
+
+<h3>🔐 OTP</h3>
+<input maxlength="6">
+
+<button onclick="verify()">تحقق</button>
+
+</div>
+
+<!-- VERIFY -->
+<div id="verify" class="hidden">
+
+<div class="badge">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Jordan.svg">
+<div>
+دائرة ضريبة الدخل والمبيعات<br>
+<b>ISTD System Connected</b>
+</div>
+</div>
+
+<p id="tax">✔ الضريبة...</p>
+<p id="ins">✔ الضمان...</p>
+<p id="res">✔ الإقامة...</p>
+
+<button onclick="sand()">دخول سند</button>
+
+</div>
+
+<!-- SAND -->
+<div id="sand" class="hidden">
+
+<h3>📱 SAND Identity</h3>
+
+<div class="card">
+✔ تم التحقق من الهوية الرقمية<br>
+✔ ربط مع ISTD<br>
+✔ ربط مع الضمان الاجتماعي
+</div>
+
+<!-- DIGITAL SIGNATURE -->
+<div class="signBox">
+✍ التوقيع الرقمي المعتمد<br>
+<b>Digital Signature Verified</b><br>
+<span class="small">Government Secure Authentication</span>
+</div>
+
+<button onclick="dash()">متابعة</button>
+
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash" class="hidden">
+
+<h3>📊 Dashboard</h3>
+
+<canvas id="chart"></canvas>
+
+<button onclick="issue()">إصدار براءة ذمة</button>
+
+</div>
+
+<!-- CERT -->
+<div id="cert" class="hidden">
+
+<h3>📄 شهادة رسمية</h3>
+
+<p>رقم: <span id="ref"></span></p>
+
+<div id="qrcode"></div>
+
+<div class="signBox">
+✔ موثق بتوقيع SAND الرقمي
+</div>
+
+<button onclick="window.print()">🖨️ طباعة PDF</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let ref;
+
+/* SPLASH */
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+},2500);
+
+/* LOGIN */
+function otp(){
+document.getElementById("login").classList.add("hidden");
+document.getElementById("otp").classList.remove("hidden");
+}
+
+/* OTP */
+function verify(){
+document.getElementById("otp").classList.add("hidden");
+document.getElementById("verify").classList.remove("hidden");
+
+setTimeout(()=>tax.innerText="✔ الضريبة ISTD تم التحقق",800);
+setTimeout(()=>ins.innerText="✔ الضمان تم التحقق",1500);
+setTimeout(()=>res.innerText="✔ الإقامة تم التحقق",2200);
+}
+
+/* SAND */
+function sand(){
+document.getElementById("verify").classList.add("hidden");
+document.getElementById("sand").classList.remove("hidden");
+}
+
+/* DASHBOARD */
+function dash(){
+document.getElementById("sand").classList.add("hidden");
+document.getElementById("dash").classList.remove("hidden");
+
+new Chart(document.getElementById("chart"),{
+type:"bar",
+data:{
+labels:["ضريبة","ضمان","إقامة"],
+datasets:[{data:[98,94,92]}]
+}
+});
+}
+
+/* ISSUE */
+function issue(){
+
+ref="CL-"+Math.floor(100000+Math.random()*900000);
+
+document.getElementById("dash").classList.add("hidden");
+document.getElementById("cert").classList.remove("hidden");
+
+/* QR */
+document.getElementById("qrcode").innerHTML="";
+new QRCode(document.getElementById("qrcode"), {
+text:"https://gov.jo/verify?ref="+ref,
+width:130,
+height:130
+});
+
+document.getElementById("ref").innerText=ref;
+
+}
+
+</script>
+
+</body>
+</html>
