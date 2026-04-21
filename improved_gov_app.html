@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Jordan Government System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        header, footer {
+            background: #007bff;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            transition: background 0.5s;
+        }
+        .dark-theme {
+            background-color: #222;
+            color: white;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        /* Media Queries for Responsive Design */
+        @media (max-width: 600px) {
+            header, footer {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Enhanced Jordan Government System</h1>
+    </header>
+    <div class="container">
+        <h2>User Profile Management</h2>
+        <form>
+            <input type="text" placeholder="Username" required />
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
+            <button type="submit" class="btn">Update Profile</button>
+        </form>
+
+        <h2>Transaction History</h2>
+        <div id="transaction-history">
+            <!-- Real-time data simulation will be inserted here -->
+        </div>
+
+        <h2>Service Request Management</h2>
+        <button class="btn">Request New Service</button>
+
+        <h2>Payment Processing Simulation</h2>
+        <button class="btn">Simulate Payment</button>
+
+        <h2>Document Uploads</h2>
+        <input type="file" /> <button class="btn">Upload Document</button>
+
+        <h2>Notifications</h2>
+        <div id="notifications">
+            <!-- Notifications will be displayed here -->
+        </div>
+
+        <h2>User Settings</h2>
+        <button class="btn">Manage Settings</button>
+
+        <h2>Logout</h2>
+        <button class="btn">Logout</button>
+
+        <h2>Theme Toggle</h2>
+        <button class="btn" onclick="toggleTheme()">Toggle Dark/Light Theme</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Jordan Government System</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            document.querySelector('header').classList.toggle('dark-theme');
+            document.querySelector('footer').classList.toggle('dark-theme');
+        }
+        // Additional JS for real-time data and notifications can be added here
+    </script>
+</body>
+</html>
